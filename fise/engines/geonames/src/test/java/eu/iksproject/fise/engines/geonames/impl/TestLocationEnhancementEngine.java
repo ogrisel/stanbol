@@ -159,7 +159,7 @@ public class TestLocationEnhancementEngine {
      */
     private int checkAllEntityAnnotations(MGraph g) {
         Iterator<Triple> entityAnnotationIterator = g.filter(null,
-                Properties.RDF_TYPE, TechnicalClasses.FISE_ENTITYANNOTATION);
+                Properties.RDF_TYPE, TechnicalClasses.FISE_ENTITY_ANNOTATION);
         int entityAnnotationCount = 0;
         while (entityAnnotationIterator.hasNext()) {
             UriRef entityAnnotation = (UriRef) entityAnnotationIterator.next().getSubject();
@@ -186,7 +186,7 @@ public class TestLocationEnhancementEngine {
             // test if the referred annotations are text annotations
             UriRef referredTextAnnotation = (UriRef) relationIterator.next().getObject();
             assertTrue(g.filter(referredTextAnnotation, Properties.RDF_TYPE,
-                    TechnicalClasses.FISE_TEXTANNOTATION).hasNext());
+                    TechnicalClasses.FISE_TEXT_ANNOTATION).hasNext());
         }
 
         // test if an entity is referred

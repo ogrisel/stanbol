@@ -197,7 +197,7 @@ public class ReferencedSiteEntityTaggingEnhancementEngine implements Enhancement
         // Retrieve the existing text annotations
         Map<UriRef, List<UriRef>> textAnnotations = new HashMap<UriRef, List<UriRef>>();
         for (Iterator<Triple> it = graph.filter(null, Properties.RDF_TYPE,
-                TechnicalClasses.FISE_TEXTANNOTATION); it.hasNext();) {
+                TechnicalClasses.FISE_TEXT_ANNOTATION); it.hasNext();) {
             UriRef uri = (UriRef) it.next().getSubject();
             if (graph.filter(uri, Properties.DC_RELATION, null).hasNext()) {
                 // this is not the most specific occurrence of this name: skip

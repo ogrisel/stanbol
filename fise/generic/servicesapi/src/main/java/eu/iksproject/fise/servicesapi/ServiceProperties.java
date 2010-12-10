@@ -22,13 +22,13 @@ public interface ServiceProperties {
 	 * single {@link Integer} as value
 	 */
 	String ENHANCEMENT_ENGINE_ORDERING = "eu.iksproject.fise.engine.order";
-	
+
 	/**
 	 * Ordering values >= this value indicate, that an enhancement engine
 	 * dose some pre processing on the content
 	 */
 	Integer ORDERING_PRE_PROCESSING = 200;
-	/**  
+	/**
 	 * Ordering values < {@link ServiceProperties#ORDERING_PRE_PROCESSING} and
 	 * >= this value indicate, that an enhancement engine performs operations
 	 * that are only dependent on the parsed content.
@@ -38,20 +38,20 @@ public interface ServiceProperties {
 	 * Ordering values < {@link ServiceProperties#ORDERING_CONTENT_EXTRACTION}
 	 * and >= this value indicate, that an enhancement engine performs operations
 	 * on extracted features of the content. It can also extract additional
-	 * enhancement by using the content, but such features might not be 
+	 * enhancement by using the content, but such features might not be
 	 * available to other engines using this ordering range
 	 */
 	Integer ORDERING_EXTRACTION_ENHANCEMENT = 1;
 	/**
 	 * The default ordering uses {@link ServiceProperties#ORDERING_EXTRACTION_ENHANCEMENT}
 	 *  -1 . So by default EnhancementEngines are called after all engines that
-	 *  use an value within the ordering range defined by 
+	 *  use an value within the ordering range defined by
 	 *  {@link ServiceProperties#ORDERING_EXTRACTION_ENHANCEMENT}
 	 */
 	Integer ORDERING_DEFAULT = 0;
 	/**
 	 * Ordering values < {@link ServiceProperties#ORDERING_DEFAULT} and >= this
-	 * value indicate that an enhancement engine performs post processing 
+	 * value indicate that an enhancement engine performs post processing
 	 * operations on existing enhancements.
 	 */
 	Integer ORDERING_POST_PROCESSING = -100;

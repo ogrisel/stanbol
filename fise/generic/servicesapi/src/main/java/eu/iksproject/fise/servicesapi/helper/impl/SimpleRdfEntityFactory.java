@@ -10,7 +10,7 @@ import eu.iksproject.fise.servicesapi.helper.RdfEntity;
 import eu.iksproject.fise.servicesapi.helper.RdfEntityFactory;
 
 public class SimpleRdfEntityFactory extends RdfEntityFactory {
-	
+
 	private final MGraph graph;
 	private final LiteralFactory literalFactory;
 	public SimpleRdfEntityFactory(MGraph graph) {
@@ -24,7 +24,8 @@ public class SimpleRdfEntityFactory extends RdfEntityFactory {
 	/* (non-Javadoc)
 	 * @see eu.iksproject.fise.servicesapi.helper.RdfEntityFactory#getWrapper(org.apache.clerezza.rdf.core.NonLiteral, java.lang.Class, java.lang.Class)
 	 */
-	@SuppressWarnings("unchecked")
+	@Override
+    @SuppressWarnings("unchecked")
 	public <T extends RdfEntity> T getProxy(NonLiteral rdfNode, Class<T> type,Class<?>...additionalInterfaces) {
 		Class<?>[] interfaces = new Class<?>[additionalInterfaces.length+1];
 		interfaces[0] = type;
@@ -33,8 +34,8 @@ public class SimpleRdfEntityFactory extends RdfEntityFactory {
 		Object instance = Proxy.newProxyInstance(SimpleRdfEntityFactory.class.getClassLoader(), interfaces, new RdfProxyInvocationHandler(this, rdfNode, interfaces, literalFactory));
 		return (T)instance;
 	}
-	
-	
+
+
 	protected MGraph getGraph() {
 		return graph;
 	}

@@ -8,12 +8,12 @@ import eu.iksproject.fise.servicesapi.helper.Rdf;
 
 @Rdf(id="http://fise.iks-project.eu/ontology/EntityAnnotation")
 public interface EntityAnnotation extends Enhancement {
-	
+
 	@Rdf(id="http://fise.iks-project.eu/ontology/entity-reference")
 	UriRef getEntityReference();
 	@Rdf(id="http://fise.iks-project.eu/ontology/entity-reference")
 	void setEntityReference(UriRef reference);
-	
+
 	@Rdf(id="http://fise.iks-project.eu/ontology/entity-label")
 	String getEntityLabel();
 	@Rdf(id="http://fise.iks-project.eu/ontology/entity-label")

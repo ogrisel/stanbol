@@ -32,7 +32,7 @@ import eu.iksproject.fise.servicesapi.rdf.Properties;
  *
  */
 public class RdfEntityFactoryTest {
-	
+
 	@Test
 	public void testRdfEntity() throws Exception {
 		MGraph graph = new SimpleMGraph();
@@ -56,30 +56,30 @@ public class RdfEntityFactoryTest {
 		String testUri = "urn:RdfEntityFactoryTest:TestEntity";
 		UriRef node = new UriRef(testUri);
 		TestRdfEntity testEntity = factory.getProxy(node, TestRdfEntity.class);
-		
+
 		testEntity.setBoolean(true);
 		assertTrue(testEntity.getBoolean());
-		
+
 		testEntity.setInteger(10);
 		assertTrue(new Integer(10).equals(testEntity.getInteger()));
-		
+
 		testEntity.setLong(20l);
 		assertTrue(new Long(20).equals(testEntity.getLong()));
-		
+
 		//TODO: Not supported by org.apache.clerezza.rdf.core.impl.SimpleLiteralFactory!
 		//testEntity.setFloat(0.1f);
 		//assertTrue(new Float(0.1f).equals(testEntity.getFloat()));
-		
+
 		testEntity.setDouble(0.2);
 		assertTrue(new Double(0.2).equals(testEntity.getDouble()));
-		
+
 		testEntity.setString("Test!");
 		assertTrue("Test!".equals(testEntity.getString()));
-		
+
 		Date currentDate = new Date();
 		testEntity.setDate(currentDate);
 		assertTrue(currentDate.equals(testEntity.getDate()));
-		
+
 		testEntity.setIntegers(Arrays.asList(new Integer(1),new Integer(2), new Integer(3)));
 		Collection<Integer> integers = testEntity.getIntegers();
 		assertTrue(integers.contains(new Integer(1)));
@@ -95,7 +95,7 @@ public class RdfEntityFactoryTest {
 		assertTrue(integers.contains(new Integer(1)));
 		assertTrue(!integers.contains(new Integer(2)));
 		assertTrue(integers.contains(new Integer(3)));
-		
+
 		//test Add
 		integers.add(new Integer(-1));
 		assertTrue(integers.contains(new Integer(-1)));
@@ -106,7 +106,7 @@ public class RdfEntityFactoryTest {
 		assertTrue(integers2.contains(new Integer(-1)));
 		assertTrue(integers2.contains(new Integer(1)));
 		assertTrue(integers2.contains(new Integer(3)));
-		
+
 		//remove/add an value in integers and test in integers2
 		integers.remove(new Integer(3));
 		integers.add(new Integer(0));
@@ -145,17 +145,17 @@ public class RdfEntityFactoryTest {
 		URI testURI = new URI("urn:test:URI");
 		entity.setURI(testURI);
 		assertTrue(testURI.equals(entity.getURI()));
-		
+
 		URL testURL = new URL("http://www.iks-project.eu");
 		entity.setURL(testURL);
 		assertTrue(testURL.equals(entity.getURL()));
-		
+
 		entity.setUriRef(node2);
 		assertTrue(node2.equals(entity.getUriRef()));
-		
+
 		entity2.setTestEntity(entity);
 		assertTrue(entity.equals(entity2.getTestEntity()));
-		
+
 		Collection<TestRdfEntity> testEntities = entity2.getTestEntities();
 		assertTrue(testEntities.isEmpty()); //check that entity is not in the collection
 		Set<UriRef> testUriRefs = new HashSet<UriRef>();
@@ -190,7 +190,7 @@ public class RdfEntityFactoryTest {
 		SubTestRdfEntity entity = factory.getProxy(node, SubTestRdfEntity.class);
 		TestRdfEntity entity2 = factory.getProxy(node2, TestRdfEntity.class,new Class<?>[]{SubTestRdfEntity.class,TestRdfEntity2.class});
 		TestRdfEntity entity3 = factory.getProxy(node3, TestRdfEntity.class);
-		
+
 		//Start with checking the types for entity2
 		//first type cast to the hierarchy
 		assertTrue(entity instanceof TestRdfEntity);
@@ -248,12 +248,12 @@ public class RdfEntityFactoryTest {
 	 */
 	@Rdf(id="urn:test:TestRdfEntity")
 	public static interface TestRdfEntity extends RdfEntity{
-		
+
 		@Rdf(id="urn:test:Integer")
 		Integer getInteger();
 		@Rdf(id="urn:test:Integer")
 		void setInteger(Integer i);
-		
+
 		@Rdf(id="urn:test:Integers")
 		Collection<Integer> getIntegers();
 		@Rdf(id="urn:test:Integers")
@@ -263,12 +263,12 @@ public class RdfEntityFactoryTest {
 		Long getLong();
 		@Rdf(id="urn:test:Long")
 		void setLong(Long l);
-		
+
 		@Rdf(id="urn:test:Float")
 		Float getFloat();
 		@Rdf(id="urn:test:Float")
 		void setFloat(Float f);
-		
+
 		@Rdf(id="urn:test:Double")
 		Double getDouble();
 		@Rdf(id="urn:test:Double")
@@ -283,7 +283,7 @@ public class RdfEntityFactoryTest {
 		Date getDate();
 		@Rdf(id="urn:test:Date")
 		void setDate(Date d);
-		
+
 		@Rdf(id="urn:test:String")
 		String getString();
 		@Rdf(id="urn:test:String")
@@ -293,7 +293,7 @@ public class RdfEntityFactoryTest {
 		Calendar getCalendar();
 		@Rdf(id="urn:test:Calendar")
 		void setCalendar(Calendar d);
-		
+
 		@Rdf(id="urn:test:URI")
 		URI getURI();
 		@Rdf(id="urn:test:URI")
@@ -303,7 +303,7 @@ public class RdfEntityFactoryTest {
 		URL getURL();
 		@Rdf(id="urn:test:URL")
 		void setURL(URL uri);
-	
+
 		@Rdf(id="urn:test:UriRef")
 		UriRef getUriRef();
 		@Rdf(id="urn:test:UriRef")
@@ -316,12 +316,12 @@ public class RdfEntityFactoryTest {
 	 */
 	@Rdf(id="urn:test:TestRdfEntity2")
 	public static interface TestRdfEntity2 extends RdfEntity {
-		
+
 		@Rdf(id="urn:test:RdfEntity")
 		TestRdfEntity getTestEntity();
 		@Rdf(id="urn:test:RdfEntity")
 		void setTestEntity(TestRdfEntity testRdfEntity);
-		
+
 		@Rdf(id="urn:test:RdfEntities")
 		Collection<TestRdfEntity> getTestEntities();
 		@Rdf(id="urn:test:RdfEntities")
@@ -334,7 +334,7 @@ public class RdfEntityFactoryTest {
 	 */
 	@Rdf(id="urn:test:SubTestRdfEntity")
 	public static interface SubTestRdfEntity extends TestRdfEntity {
-		
+
 		@Rdf(id="urn:test:RdfEntity2")
 		TestRdfEntity2 getTestEntity2();
 		@Rdf(id="urn:test:RdfEntity2")

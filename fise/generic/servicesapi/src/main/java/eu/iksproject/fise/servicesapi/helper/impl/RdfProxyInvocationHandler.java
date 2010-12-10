@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package eu.iksproject.fise.servicesapi.helper.impl;
 
@@ -12,7 +12,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.AbstractCollection;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -84,7 +83,7 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 			interfaceSet.add(clazz);
 			getSuperInterfaces(clazz, interfaceSet);
 		}
-		this.interfaces = Collections.unmodifiableSet(interfaceSet); //nobody should be able to change this! 
+		this.interfaces = Collections.unmodifiableSet(interfaceSet); //nobody should be able to change this!
 		for(Class<?> clazz : this.interfaces){
 			Rdf classAnnotation = clazz.getAnnotation(Rdf.class);
 			if(classAnnotation == null){
@@ -137,7 +136,7 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 		if(rdf == null){
 			throw new IllegalStateException("Invoked Method does not have an Rdf annotation!");
 		}
-		UriRef property; 
+		UriRef property;
 		if(rdf.id().startsWith("http://") || rdf.id().startsWith("urn:")){
 			property = new UriRef(rdf.id());
 		} else {
@@ -213,7 +212,7 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private <T> T getValue(UriRef property, Class<T> type){
 		Iterator<Triple> results = factory.getGraph().filter(rdfNode, property, null);
@@ -266,7 +265,7 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 		}
 	}
 	protected Resource getRdfResource(Object value) throws NoConvertorException{
-		if(value instanceof Resource){ 
+		if(value instanceof Resource){
 			//if the parsed object is already a Resource
 			return (Resource) value; //return it
 		} else if(value instanceof RdfEntity){ //check for other proxies
@@ -289,7 +288,7 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 			throw new IllegalArgumentException("Unable to transform "+value.getClass()+" to an RDF Node. Only "+RdfEntity.class+" and RDF Literal Types are supported");
 		}
 	}
-	private boolean removeValue(UriRef property, Object value){	
+	private boolean removeValue(UriRef property, Object value){
 		Resource rdfValue;
 		try {
 			rdfValue = getRdfResource(value);
@@ -325,7 +324,7 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 		private final boolean uri;
 		private final boolean url;
 		private final boolean uriRef;
-		
+
 		private RdfProxyPropertyCollection(UriRef property,Class<T> genericType) {
 			this.property = property;
 			this.genericType = genericType;
@@ -334,7 +333,7 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 			url = URL.class.isAssignableFrom(genericType);
 			uriRef = UriRef.class.isAssignableFrom(genericType);
 		}
-		
+
 		@Override
 		public Iterator<T> iterator() {
 			return new Iterator<T>() {
@@ -349,7 +348,7 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 				public T next() {
 					Resource value = results.next().getObject();
 					if(entity){
-						//type checks are done within the constructor 
+						//type checks are done within the constructor
 						return (T) factory.getProxy((NonLiteral)value, (Class<? extends RdfEntity>)genericType);
 					} else if(uri){
 						try {
@@ -386,7 +385,8 @@ public class RdfProxyInvocationHandler implements InvocationHandler {
 			}
 			return size;
 		}
-		public boolean add(T value) {
+		@Override
+        public boolean add(T value) {
 			return addValue(property, value);
 		};
 		@Override

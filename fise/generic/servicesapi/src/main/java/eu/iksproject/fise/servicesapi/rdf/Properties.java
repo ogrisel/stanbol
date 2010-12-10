@@ -156,7 +156,7 @@ public interface Properties {
 	 * Plain text content of a content item.
 	  */
 	public static final UriRef NIE_PLAINTEXTCONTENT = new UriRef(NamespaceEnum.nie + "plainTextContent");
-	
+
     /**
      * The topic of the resource. Used to relate a content item to a
      * skos:Concept modelling one of the overall topic of the content.

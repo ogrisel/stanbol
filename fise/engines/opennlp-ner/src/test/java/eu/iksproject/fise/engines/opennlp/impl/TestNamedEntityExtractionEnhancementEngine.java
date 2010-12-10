@@ -142,7 +142,7 @@ public class TestNamedEntityExtractionEnhancementEngine extends Assert {
      */
     private int checkAllTextAnnotations(MGraph g, String content) {
         Iterator<Triple> textAnnotationIterator = g.filter(null,
-                Properties.RDF_TYPE, TechnicalClasses.FISE_TEXTANNOTATION);
+                Properties.RDF_TYPE, TechnicalClasses.FISE_TEXT_ANNOTATION);
         // test if a textAnnotation is present
         assertTrue(textAnnotationIterator.hasNext());
         int textAnnotationCount = 0;

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
@@ -39,10 +38,14 @@ public class TestEnhancementInterfaces {
 	public static ContentItem wrapAsContentItem(final String id, final String text) {
         return new ContentItem() {
             SimpleMGraph metadata = new SimpleMGraph();
+            @Override
             public InputStream getStream() { return new ByteArrayInputStream(text.getBytes());}
+            @Override
             public String getMimeType() { return "text/plain"; }
-	        public MGraph getMetadata() { return metadata; }
-	        public String getId() { return id; }
+	        @Override
+            public MGraph getMetadata() { return metadata; }
+	        @Override
+            public String getId() { return id; }
 	    };
 	}
 	@Test
@@ -64,7 +67,7 @@ public class TestEnhancementInterfaces {
 		personAnnotation.setStart(SINGLE_SENTENCE.indexOf(personAnnotation.getSelectedText()));
 		personAnnotation.setEnd(personAnnotation.getStart()+personAnnotation.getSelectedText().length());
 		personAnnotation.setSelectionContext(SINGLE_SENTENCE);
-		
+
 		//create an Text Annotation representing an extracted Location
 		TextAnnotation locationAnnotation = factory.getProxy(
 				createEnhancementURI(),	TextAnnotation.class);
@@ -77,7 +80,7 @@ public class TestEnhancementInterfaces {
 		locationAnnotation.setStart(SINGLE_SENTENCE.indexOf(locationAnnotation.getSelectedText()));
 		locationAnnotation.setEnd(locationAnnotation.getStart()+locationAnnotation.getSelectedText().length());
 		locationAnnotation.setSelectionContext(SINGLE_SENTENCE);
-		
+
 		//create an Text Annotation representing an extracted Organisation
 		TextAnnotation orgAnnotation = factory.getProxy(
 				createEnhancementURI(),	TextAnnotation.class);
@@ -90,7 +93,7 @@ public class TestEnhancementInterfaces {
 		orgAnnotation.setStart(SINGLE_SENTENCE.indexOf(orgAnnotation.getSelectedText()));
 		orgAnnotation.setEnd(orgAnnotation.getStart()+orgAnnotation.getSelectedText().length());
 		orgAnnotation.setSelectionContext(SINGLE_SENTENCE);
-		
+
 		// create an Entity Annotation for the person TextAnnotation
 		EntityAnnotation patrickMarshall = factory.getProxy(
 				createEnhancementURI(), EntityAnnotation.class);
@@ -121,7 +124,7 @@ public class TestEnhancementInterfaces {
 				new UriRef("http://rdf.freebase.com/ns/location.location"),
 				new UriRef("http://rdf.freebase.com/ns/common.topic"),
 				new UriRef("http://rdf.freebase.com/ns/location.country")));
-		
+
 		// and an other option for New Zealand
 		EntityAnnotation airNewZealand = factory.getProxy(
 				createEnhancementURI(), EntityAnnotation.class);
@@ -154,7 +157,7 @@ public class TestEnhancementInterfaces {
 	 */
 	private UriRef createEnhancementURI() {
 		//TODO: add some Utility to create Instances to the RdfEntityFactory
-		//      this should create a new URI by some default Algorithm 
+		//      this should create a new URI by some default Algorithm
 		UriRef enhancementNode = new UriRef("urn:enhancement-"
                 + EnhancementEngineHelper.randomUUID());
 		return enhancementNode;
@@ -170,7 +173,7 @@ public class TestEnhancementInterfaces {
      */
     private int checkAllEntityAnnotations(MGraph g) {
         Iterator<Triple> entityAnnotationIterator = g.filter(null,
-                Properties.RDF_TYPE, TechnicalClasses.FISE_ENTITYANNOTATION);
+                Properties.RDF_TYPE, TechnicalClasses.FISE_ENTITY_ANNOTATION);
         int entityAnnotationCount = 0;
         while (entityAnnotationIterator.hasNext()) {
             UriRef entityAnnotation = (UriRef) entityAnnotationIterator.next().getSubject();
@@ -187,7 +190,7 @@ public class TestEnhancementInterfaces {
      */
     private int checkAllTextAnnotations(MGraph g) {
         Iterator<Triple> textAnnotationIterator = g.filter(null,
-                Properties.RDF_TYPE, TechnicalClasses.FISE_TEXTANNOTATION);
+                Properties.RDF_TYPE, TechnicalClasses.FISE_TEXT_ANNOTATION);
         // test if a textAnnotation is present
         assertTrue("Expecting non-empty textAnnotationIterator", textAnnotationIterator.hasNext());
         int textAnnotationCount = 0;
@@ -240,7 +243,7 @@ public class TestEnhancementInterfaces {
             // test if the referred annotations are text annotations
             UriRef referredTextAnnotation = (UriRef) relationToTextAnnotationIterator.next().getObject();
             assertTrue(g.filter(referredTextAnnotation, Properties.RDF_TYPE,
-                    TechnicalClasses.FISE_TEXTANNOTATION).hasNext());
+                    TechnicalClasses.FISE_TEXT_ANNOTATION).hasNext());
         }
 
         // test if an entity is referred

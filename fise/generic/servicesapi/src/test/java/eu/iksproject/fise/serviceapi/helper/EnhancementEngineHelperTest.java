@@ -22,10 +22,12 @@ public class EnhancementEngineHelperTest {
 
     public static class MyEngine implements EnhancementEngine {
 
+        @Override
         public int canEnhance(ContentItem ci) throws EngineException {
             return 0;
         }
 
+        @Override
         public void computeEnhancements(ContentItem ci) throws EngineException {
             // do nothing
         }
@@ -40,13 +42,13 @@ public class EnhancementEngineHelperTest {
 			public InputStream getStream() {
 				return new ByteArrayInputStream("There is content".getBytes());
 			}
-			
+
 			@Override
 			public String getMimeType() { return "text/plain"; }
-			
+
 			@Override
 			public MGraph getMetadata() { return mgraph; }
-			
+
 			@Override
 			public String getId() { return "urn:test:contentItem"; }
 		};

@@ -71,18 +71,22 @@ public class InMemoryContentItem implements ContentItem {
                 + ", metadata=" + metadata;
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public MGraph getMetadata() {
         return metadata;
     }
 
+    @Override
     public String getMimeType() {
         return mimeType;
     }
 
+    @Override
     public InputStream getStream() {
         return new ByteArrayInputStream(data);
     }

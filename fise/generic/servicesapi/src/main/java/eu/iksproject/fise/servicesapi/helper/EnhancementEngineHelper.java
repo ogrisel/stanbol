@@ -60,7 +60,7 @@ public class EnhancementEngineHelper {
     	UriRef enhancement = createEnhancement(metadata, engine,contentItemId);
         //add the Text Annotation Type
         metadata.add(new TripleImpl(enhancement, Properties.RDF_TYPE,
-                TechnicalClasses.FISE_TEXTANNOTATION));
+                TechnicalClasses.FISE_TEXT_ANNOTATION));
         return enhancement;
     }
     /**
@@ -91,7 +91,7 @@ public class EnhancementEngineHelper {
         		EnhancementEngine engine, UriRef contentItemId){
     	UriRef enhancement = createEnhancement(metadata, engine, contentItemId);
         metadata.add(new TripleImpl(enhancement, Properties.RDF_TYPE,
-                TechnicalClasses.FISE_ENTITYANNOTATION));
+                TechnicalClasses.FISE_ENTITY_ANNOTATION));
         return enhancement;
     }
     /**

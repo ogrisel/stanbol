@@ -45,7 +45,6 @@ import eu.iksproject.fise.servicesapi.rdf.TechnicalClasses;
 
 @Component(immediate = true, metatype = true)
 @Service()
-//@Property(name="service.ranking",intValue=5)
 public class LocationEnhancementEngine implements EnhancementEngine, ServiceProperties {
 
     /**
@@ -254,10 +253,10 @@ public class LocationEnhancementEngine implements EnhancementEngine, ServiceProp
          */
         Map<String, Collection<NonLiteral>> name2placeEnhancementMap = new HashMap<String, Collection<NonLiteral>>();
         for(Iterator<Triple> it = graph.filter(null, Properties.DC_TYPE, OntologicalClasses.DBPEDIA_PLACE); it.hasNext();){
-        	NonLiteral placeEnhancement = it.next().getSubject(); //the enhancement annotating an place
-        	//this can still be an TextAnnotation of an EntityAnnotation
-        	//so we need to filter TextAnnotation
-        	Triple isTextAnnotation = new TripleImpl(placeEnhancement, Properties.RDF_TYPE, TechnicalClasses.FISE_TEXTANNOTATION);
+            NonLiteral placeEnhancement = it.next().getSubject(); //the enhancement annotating an place
+            //this can still be an TextAnnotation of an EntityAnnotation
+            //so we need to filter TextAnnotation
+        	Triple isTextAnnotation = new TripleImpl(placeEnhancement, Properties.RDF_TYPE, TechnicalClasses.FISE_TEXT_ANNOTATION);
         	if(graph.contains(isTextAnnotation)){
         		//now get the name
             	String name = EnhancementEngineHelper.getString(graph, placeEnhancement, Properties.FISE_SELECTED_TEXT);

@@ -7,6 +7,9 @@ package eu.iksproject.fise.engines.salsadev.core;
  * @version %I%, %G%
  */
 public class SalsadevApiException extends Exception {
+
+    private static final long serialVersionUID = 1L;
+
     public SalsadevApiException() {
         super();
     }

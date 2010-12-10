@@ -63,9 +63,9 @@ public class SalsadevEnhancementEngine implements EnhancementEngine, ServiceProp
     private static final String PROPERTIES_FILE_PATH = "eu.iksproject.fise.engines.salsadev.properties.file.path";
     /**
      * The default value for the Execution of this Engine. Currently set to
-     * {@link ServiceProperties#ORDERING_PRE_PROCESSING}
+     * {@link ServiceProperties#ORDERING_EXTRACTION_ENHANCEMENT}
      */
-    public static final Integer DEFAULT_ORDER = ServiceProperties.ORDERING_PRE_PROCESSING - 17;
+    public static final Integer DEFAULT_ORDER = ServiceProperties.ORDERING_EXTRACTION_ENHANCEMENT;
 
     /**
      * The activate method.
@@ -111,8 +111,6 @@ public class SalsadevEnhancementEngine implements EnhancementEngine, ServiceProp
     @Override
     public void computeEnhancements(ContentItem ci) throws EngineException {
         try {
-            apiProvider.index(ci.getStream(), ci.getMimeType(), ci.getId());
-
             MGraph g = ci.getMetadata();
             LiteralFactory literalFactory = LiteralFactory.getInstance();
 

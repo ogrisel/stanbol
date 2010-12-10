@@ -7,12 +7,13 @@ import eu.iksproject.fise.engines.salsadev.core.xml.converter.DocumentConverter;
 import eu.iksproject.fise.engines.salsadev.core.xml.converter.KeywordConverter;
 import eu.iksproject.fise.engines.salsadev.core.xml.converter.SearchDescriptorConverter;
 import eu.iksproject.fise.engines.salsadev.core.xml.pojo.*;
-import eu.iksproject.fise.engines.salsadev.core.xml.pojo.Category;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -24,7 +25,10 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.RequestEntity;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.lang.StringUtils;
 
 import org.slf4j.Logger;
@@ -34,14 +38,13 @@ import org.slf4j.LoggerFactory;
  * {@link SalsadevApiProvider} Provides methods to do SalsaDev API requests.
  *
  * @author <a href="mailto:aleksey.oborin@salsadev.com">Aleksey Oborin</a>
- * @version %I%, %G%
  */
 @SuppressWarnings("unused")
 public class SalsadevApiProvider {
     /**
      * This contains the logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SalsadevApiProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(SalsadevApiProvider.class);
 
     /**
      * Set of supportable content mime types.
@@ -198,12 +201,12 @@ public class SalsadevApiProvider {
                     append(URLEncoder.encode(uid, "utf8")).toString());
             postMethod.setDoAuthentication(true);
             postMethod.setRequestHeader("Content-Type", contentType);
-            postMethod.setRequestBody(contentStream);
+            postMethod.setRequestEntity(new InputStreamRequestEntity(contentStream));
 
             prepareHttpClient().executeMethod(postMethod);
 
         } catch (Exception e) {
-            LOGGER.warn(e.getLocalizedMessage(), e);
+            log.warn(e.getLocalizedMessage(), e);
             throw new SalsadevApiException(e.getLocalizedMessage(), e);
         } finally {
             if (postMethod != null) {
@@ -227,11 +230,11 @@ public class SalsadevApiProvider {
                     append(keywordsNumber).toString());
             postMethod.setDoAuthentication(true);
             postMethod.setRequestHeader("Content-Type", contentType);
-            postMethod.setRequestBody(contentStream);
+            postMethod.setRequestEntity(new InputStreamRequestEntity(contentStream));
 
             prepareHttpClient().executeMethod(postMethod);
 
-            LOGGER.info(postMethod.getResponseBodyAsString());
+            log.info(postMethod.getResponseBodyAsString());
             InputStream responseStream = postMethod.getResponseBodyAsStream();
 
             XStream xstream = new XStream();
@@ -247,7 +250,7 @@ public class SalsadevApiProvider {
             }
             return keywordList;
         } catch (Exception e) {
-            LOGGER.warn(e.getLocalizedMessage(), e);
+            log.warn(e.getLocalizedMessage(), e);
             throw new SalsadevApiException(e.getLocalizedMessage(), e);
         } finally {
             if (postMethod != null) {
@@ -272,11 +275,12 @@ public class SalsadevApiProvider {
                     append(categoriesNumber).append("&rt=").append(categoriesThreshold).toString());
             postMethod.setDoAuthentication(true);
             postMethod.setRequestHeader("Content-Type", contentType);
-            postMethod.setRequestBody(contentStream);
+            postMethod.setRequestEntity(new InputStreamRequestEntity(contentStream));
+
 
             prepareHttpClient().executeMethod(postMethod);
 
-            LOGGER.info(postMethod.getResponseBodyAsString());
+            log.info(postMethod.getResponseBodyAsString());
             InputStream responseStream = postMethod.getResponseBodyAsStream();
 
             XStream xStream = new XStream();
@@ -292,7 +296,7 @@ public class SalsadevApiProvider {
             }
             return categoryListDto;
         } catch (Exception e) {
-            LOGGER.warn(e.getLocalizedMessage(), e);
+            log.warn(e.getLocalizedMessage(), e);
             throw new SalsadevApiException(e.getLocalizedMessage(), e);
         } finally {
             if (postMethod != null) {
@@ -344,8 +348,8 @@ public class SalsadevApiProvider {
             }
             return documentList;
         } catch (Exception e) {
-            LOGGER.error("Error while trying to perform a search.", e);
-            LOGGER.warn(e.getLocalizedMessage(), e);
+            log.error("Error while trying to perform a search.", e);
+            log.warn(e.getLocalizedMessage(), e);
             throw new SalsadevApiException(e.getLocalizedMessage(), e);
         } finally {
             if (getMethod != null) {
@@ -374,12 +378,13 @@ public class SalsadevApiProvider {
             xStream.registerConverter(new DocumentConverter());
             xStream.alias("documentHit", Document.class);
             xStream.registerConverter(new SearchDescriptorConverter());
-
-            postMethod.setRequestBody(xStream.toXML(searchDescriptor));
+            postMethod.setRequestEntity(new StringRequestEntity(
+                    xStream.toXML(searchDescriptor), "application/xml",
+                    Charset.forName("UTF8").toString()));
 
             prepareHttpClient().executeMethod(postMethod);
 
-            LOGGER.info(postMethod.getResponseBodyAsString());
+            log.info(postMethod.getResponseBodyAsString());
             InputStream responseStream = postMethod.getResponseBodyAsStream();
 
             DocumentList documentList = (DocumentList) xStream.fromXML(responseStream);
@@ -391,8 +396,8 @@ public class SalsadevApiProvider {
             return documentList;
 
         } catch (Exception e) {
-            LOGGER.error("Error while trying to perform a constrain search.", e);
-            LOGGER.warn(e.getLocalizedMessage(), e);
+            log.error("Error while trying to perform a constrain search.", e);
+            log.warn(e.getLocalizedMessage(), e);
             throw new SalsadevApiException(e.getLocalizedMessage(), e);
         } finally {
             if (postMethod != null) {

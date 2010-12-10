@@ -20,7 +20,8 @@ import eu.iksproject.fise.servicesapi.ServiceProperties;
 /**
  * Abstract base class for the Salsadev enhancement engines
  */
-public abstract class AbstractSalsadevEnhancementEngine implements EnhancementEngine, ServiceProperties {
+public abstract class AbstractSalsadevEnhancementEngine implements
+        EnhancementEngine, ServiceProperties {
 
     /**
      * SalsadevApiProvider, provides methods to work with SalsaDev API.
@@ -87,7 +88,8 @@ public abstract class AbstractSalsadevEnhancementEngine implements EnhancementEn
      */
     @Override
     public Map<String, Object> getServiceProperties() {
-        return Collections.unmodifiableMap(Collections.singletonMap(ServiceProperties.ENHANCEMENT_ENGINE_ORDERING,
+        return Collections.unmodifiableMap(Collections.singletonMap(
+                ServiceProperties.ENHANCEMENT_ENGINE_ORDERING,
                 (Object) DEFAULT_ORDER));
     }
 }

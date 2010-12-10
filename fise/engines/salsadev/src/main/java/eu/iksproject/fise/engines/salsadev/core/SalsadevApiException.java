@@ -1,7 +1,8 @@
 package eu.iksproject.fise.engines.salsadev.core;
 
 /**
- * {@link SalsadevApiException} Exception class to indicate SalsaDev API related errors.
+ * {@link SalsadevApiException} Exception class to indicate SalsaDev API related
+ * errors.
  *
  * @author <a href="mailto:aleksey.oborin@salsadev.com">Aleksey Oborin</a>
  * @version %I%, %G%

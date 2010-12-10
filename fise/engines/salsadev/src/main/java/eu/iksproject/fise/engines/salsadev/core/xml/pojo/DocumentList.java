@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link DocumentList} POJO class, contains list of document's hits and it is used as XML wrapper for this list.
+ * {@link DocumentList} POJO class, contains list of document's hits and it is
+ * used as XML wrapper for this list.
  *
  * @author <a href="mailto:aleksey.oborin@salsadev.com">Aleksey Oborin</a>
  * @version %I%, %G%

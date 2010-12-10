@@ -50,45 +50,55 @@ public class SalsadevApiProvider {
      * Set of supportable content mime types.
      */
     private Set<String> mimeTypes = new HashSet<String>();
+
     /**
      * Host of SalsaDev API account.
      */
     private String host;
+
     /**
      * Port of SalsaDev API account.
      */
     private int port;
+
     /**
      * Protocol of SalsaDev API account.
      */
     private String protocol;
+
     /**
      * Login of SalsaDev API account.
      */
     private String login;
+
     /**
      * Password of SalsaDev API account.
      */
     private String password;
+
     /**
      * Context of SalsaDev API account.
      */
     private String context;
+
     /**
      * Number of keywords that should be return.
      */
-    private int keywordsNumber = 10; //default value
+    private int keywordsNumber = 10; // default value
+
     /**
      * Number of categories that should be return.
      */
-    private int categoriesNumber = 5; //default value
-    /**
-     * Threshold value that should be used to get categories. 
-     */
-    private double categoriesThreshold = 0.2d; //default value
+    private int categoriesNumber = 5; // default value
 
     /**
-     * Initializes ApiProvider with configuration properties from the specified properties file.
+     * Threshold value that should be used to get categories.
+     */
+    private double categoriesThreshold = 0.2d; // default value
+
+    /**
+     * Initializes ApiProvider with configuration properties from the specified
+     * properties file.
      *
      * @param propertiesFilePath path to the properties file.
      * @throws IOException in case of any IO errors.
@@ -105,8 +115,8 @@ public class SalsadevApiProvider {
      * @throws IOException in case of any IO errors.
      */
     public SalsadevApiProvider() throws IOException {
-        InputStream in =
-                getClass().getClassLoader().getResourceAsStream(SalsadevConstants.DEFAULT_PROPERTIES_FILE);
+        InputStream in = getClass().getClassLoader().getResourceAsStream(
+                SalsadevConstants.DEFAULT_PROPERTIES_FILE);
         Properties properties = new Properties();
         properties.load(in);
         loadProperties(properties);
@@ -120,40 +130,53 @@ public class SalsadevApiProvider {
      */
     private void loadProperties(Properties properties) throws IOException {
         if (properties.getProperty(SalsadevConstants.MIME_TYPES_PROPERTY_NAME) != null) {
-            String[] mimeTypesValues = properties.getProperty(SalsadevConstants.MIME_TYPES_PROPERTY_NAME).split(",");
+            String[] mimeTypesValues = properties.getProperty(
+                    SalsadevConstants.MIME_TYPES_PROPERTY_NAME).split(",");
             mimeTypes.addAll(Arrays.asList(mimeTypesValues));
         } else {
-            throw new IOException("There is no " + SalsadevConstants.MIME_TYPES_PROPERTY_NAME + " property specified.");
+            throw new IOException("There is no "
+                    + SalsadevConstants.MIME_TYPES_PROPERTY_NAME
+                    + " property specified.");
         }
 
         if (properties.getProperty(SalsadevConstants.HOST_PROPERTY_NAME) != null) {
             this.host = properties.getProperty(SalsadevConstants.HOST_PROPERTY_NAME);
         } else {
-            throw new IOException("There is no " + SalsadevConstants.HOST_PROPERTY_NAME + " property specified.");
+            throw new IOException("There is no "
+                    + SalsadevConstants.HOST_PROPERTY_NAME
+                    + " property specified.");
         }
 
         if (properties.getProperty(SalsadevConstants.PORT_PROPERTY_NAME) != null) {
             this.port = Integer.valueOf(properties.getProperty(SalsadevConstants.PORT_PROPERTY_NAME));
         } else {
-            throw new IOException("There is no " + SalsadevConstants.PORT_PROPERTY_NAME + " property specified.");
+            throw new IOException("There is no "
+                    + SalsadevConstants.PORT_PROPERTY_NAME
+                    + " property specified.");
         }
 
         if (properties.getProperty(SalsadevConstants.PROTOCOL_PROPERTY_NAME) != null) {
             this.protocol = properties.getProperty(SalsadevConstants.PROTOCOL_PROPERTY_NAME);
         } else {
-            throw new IOException("There is no " + SalsadevConstants.PROTOCOL_PROPERTY_NAME + " property specified.");
+            throw new IOException("There is no "
+                    + SalsadevConstants.PROTOCOL_PROPERTY_NAME
+                    + " property specified.");
         }
 
         if (properties.getProperty(SalsadevConstants.LOGIN_PROPERTY_NAME) != null) {
             this.login = properties.getProperty(SalsadevConstants.LOGIN_PROPERTY_NAME);
         } else {
-            throw new IOException("There is no " + SalsadevConstants.LOGIN_PROPERTY_NAME + " property specified.");
+            throw new IOException("There is no "
+                    + SalsadevConstants.LOGIN_PROPERTY_NAME
+                    + " property specified.");
         }
 
         if (properties.getProperty(SalsadevConstants.PASSWORD_PROPERTY_NAME) != null) {
             this.password = properties.getProperty(SalsadevConstants.PASSWORD_PROPERTY_NAME);
         } else {
-            throw new IOException("There is no " + SalsadevConstants.PASSWORD_PROPERTY_NAME + " property specified.");
+            throw new IOException("There is no "
+                    + SalsadevConstants.PASSWORD_PROPERTY_NAME
+                    + " property specified.");
         }
 
         if (properties.getProperty(SalsadevConstants.CONTEXT_PROPERTY_NAME) != null) {
@@ -161,18 +184,15 @@ public class SalsadevApiProvider {
         }
 
         if (properties.getProperty(SalsadevConstants.KEYWORDS_NUM_PROPERTY_NAME) != null) {
-            this.keywordsNumber = Integer.valueOf(properties.getProperty(
-                    SalsadevConstants.KEYWORDS_NUM_PROPERTY_NAME));
+            this.keywordsNumber = Integer.valueOf(properties.getProperty(SalsadevConstants.KEYWORDS_NUM_PROPERTY_NAME));
         }
 
         if (properties.getProperty(SalsadevConstants.CATEGORIES_NUM_PROPERTY_NAME) != null) {
-            this.categoriesNumber = Integer.valueOf(properties.getProperty(
-                    SalsadevConstants.CATEGORIES_NUM_PROPERTY_NAME));
+            this.categoriesNumber = Integer.valueOf(properties.getProperty(SalsadevConstants.CATEGORIES_NUM_PROPERTY_NAME));
         }
 
         if (properties.getProperty(SalsadevConstants.CATEGORIES_THRESHOLD_PROPERTY_NAME) != null) {
-            this.categoriesThreshold = Double.valueOf(properties.getProperty(
-                    SalsadevConstants.CATEGORIES_THRESHOLD_PROPERTY_NAME));
+            this.categoriesThreshold = Double.valueOf(properties.getProperty(SalsadevConstants.CATEGORIES_THRESHOLD_PROPERTY_NAME));
         }
     }
 
@@ -190,18 +210,21 @@ public class SalsadevApiProvider {
      * Indexes the specified content with SalsaDev search engine.
      *
      * @param contentStream stream with content.
-     * @param contentType   content type.
-     * @param uid           unique id of content.
+     * @param contentType content type.
+     * @param uid unique id of content.
      * @throws SalsadevApiException in case of any errors during api call.
      */
-    public void index(InputStream contentStream, String contentType, String uid) throws SalsadevApiException {
+    public void index(InputStream contentStream, String contentType, String uid)
+            throws SalsadevApiException {
         PostMethod postMethod = null;
         try {
-            postMethod = new PostMethod(new StringBuilder().append(buildApiUrl()).append("/index?uid=").
-                    append(URLEncoder.encode(uid, "utf8")).toString());
+            postMethod = new PostMethod(new StringBuilder().append(
+                    buildApiUrl()).append("/index?uid=").append(
+                    URLEncoder.encode(uid, "utf8")).toString());
             postMethod.setDoAuthentication(true);
             postMethod.setRequestHeader("Content-Type", contentType);
-            postMethod.setRequestEntity(new InputStreamRequestEntity(contentStream));
+            postMethod.setRequestEntity(new InputStreamRequestEntity(
+                    contentStream));
 
             prepareHttpClient().executeMethod(postMethod);
 
@@ -219,18 +242,21 @@ public class SalsadevApiProvider {
      * Finds suitable keywords for the given content.
      *
      * @param contentStream stream with content.
-     * @param contentType   content type.
+     * @param contentType content type.
      * @return KeywordListDto object set with results.
      * @throws SalsadevApiException in case of any errors during api call.
      */
-    public KeywordList keywords(InputStream contentStream, String contentType) throws SalsadevApiException {
+    public KeywordList keywords(InputStream contentStream, String contentType)
+            throws SalsadevApiException {
         PostMethod postMethod = null;
         try {
-            postMethod = new PostMethod(new StringBuilder().append(buildApiUrl()).append("/lift/keywords?num=").
-                    append(keywordsNumber).toString());
+            postMethod = new PostMethod(new StringBuilder().append(
+                    buildApiUrl()).append("/lift/keywords?num=").append(
+                    keywordsNumber).toString());
             postMethod.setDoAuthentication(true);
             postMethod.setRequestHeader("Content-Type", contentType);
-            postMethod.setRequestEntity(new InputStreamRequestEntity(contentStream));
+            postMethod.setRequestEntity(new InputStreamRequestEntity(
+                    contentStream));
 
             prepareHttpClient().executeMethod(postMethod);
 
@@ -263,20 +289,23 @@ public class SalsadevApiProvider {
      * Categorizes given content.
      *
      * @param contentStream stream with content.
-     * @param contentType   content type.
+     * @param contentType content type.
      * @return CategoryHitListDto set with the results.
      * @throws SalsadevApiException in case of any errors during api call.
      */
-    public CategoryList categories(InputStream contentStream, String contentType) throws SalsadevApiException {
+    public CategoryList categories(InputStream contentStream, String contentType)
+            throws SalsadevApiException {
 
         PostMethod postMethod = null;
         try {
-            postMethod = new PostMethod(new StringBuilder().append(buildApiUrl()).append("/categorize?num=").
-                    append(categoriesNumber).append("&rt=").append(categoriesThreshold).toString());
+            postMethod = new PostMethod(
+                    new StringBuilder().append(buildApiUrl()).append(
+                            "/categorize?num=").append(categoriesNumber).append(
+                            "&rt=").append(categoriesThreshold).toString());
             postMethod.setDoAuthentication(true);
             postMethod.setRequestHeader("Content-Type", contentType);
-            postMethod.setRequestEntity(new InputStreamRequestEntity(contentStream));
-
+            postMethod.setRequestEntity(new InputStreamRequestEntity(
+                    contentStream));
 
             prepareHttpClient().executeMethod(postMethod);
 
@@ -290,7 +319,8 @@ public class SalsadevApiProvider {
             xStream.alias("categoryHit", Category.class);
             CategoryList categoryListDto = (CategoryList) xStream.fromXML(responseStream);
 
-            if (categoryListDto == null || categoryListDto.getCategories() == null) {
+            if (categoryListDto == null
+                    || categoryListDto.getCategories() == null) {
                 categoryListDto = new CategoryList();
                 categoryListDto.setCategories(new ArrayList<Category>());
             }
@@ -308,13 +338,14 @@ public class SalsadevApiProvider {
     /**
      * Searches the specified query with SalsaDev search engine.
      *
-     * @param query  query to be searched.
-     * @param limit  number of results.
+     * @param query query to be searched.
+     * @param limit number of results.
      * @param offset offset of the results.
      * @return DocumentHitListDto object set with search results.
      * @throws SalsadevApiException in case of any errors during api call.
      */
-    public DocumentList search(String query, int limit, int offset) throws SalsadevApiException {
+    public DocumentList search(String query, int limit, int offset)
+            throws SalsadevApiException {
         GetMethod getMethod = null;
         try {
             String resultSize = "&num=" + Integer.MAX_VALUE;
@@ -326,9 +357,11 @@ public class SalsadevApiProvider {
                 pageNumber = "&page=" + offset;
             }
 
-            getMethod = new GetMethod(new StringBuilder().append(buildApiUrl()).append("/search?query=").
-                    append(URLEncoder.encode(query, "utf8")).
-                    append(resultSize).append(pageNumber).toString());
+            getMethod = new GetMethod(
+                    new StringBuilder().append(buildApiUrl()).append(
+                            "/search?query=").append(
+                            URLEncoder.encode(query, "utf8")).append(resultSize).append(
+                            pageNumber).toString());
             getMethod.setDoAuthentication(true);
             prepareHttpClient().executeMethod(getMethod);
 
@@ -365,7 +398,8 @@ public class SalsadevApiProvider {
      * @return DocumentHitListDto object set with search results.
      * @throws SalsadevApiException in case of any errors during api call.
      */
-    public DocumentList constrainSearch(SearchDescriptor searchDescriptor) throws SalsadevApiException {
+    public DocumentList constrainSearch(SearchDescriptor searchDescriptor)
+            throws SalsadevApiException {
         PostMethod postMethod = null;
         try {
             postMethod = new PostMethod("/search");
@@ -406,15 +440,15 @@ public class SalsadevApiProvider {
         }
     }
 
-                                                      
     /**
      * Builds url string to SalsaDev api.
      *
      * @return api url string.
      */
     private String buildApiUrl() {
-        return new StringBuilder().append(protocol).append("://").append(host).append(":").append(port).
-                append(StringUtils.isEmpty(context) ? "" : "/" + context).toString();
+        return new StringBuilder().append(protocol).append("://").append(host).append(
+                ":").append(port).append(
+                StringUtils.isEmpty(context) ? "" : "/" + context).toString();
     }
 
     /**
@@ -425,8 +459,10 @@ public class SalsadevApiProvider {
     public HttpClient prepareHttpClient() {
         HttpClient client = new HttpClient();
         client.getParams().setAuthenticationPreemptive(true);
-        Credentials credentials = new UsernamePasswordCredentials(login, password);
-        client.getState().setCredentials(new AuthScope(host, port, AuthScope.ANY_REALM), credentials);
+        Credentials credentials = new UsernamePasswordCredentials(login,
+                password);
+        client.getState().setCredentials(
+                new AuthScope(host, port, AuthScope.ANY_REALM), credentials);
         return client;
     }
 }

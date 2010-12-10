@@ -15,10 +15,12 @@ public class ConstrainTerm implements Serializable {
      * constrain operator, e.g AND.
      */
     private String operator;
+
     /**
      * List of atomic constrains.
      */
     private List<AtomicTerm> atomics;
+
     /**
      * List of sub constrains.
      */
@@ -53,5 +55,5 @@ public class ConstrainTerm implements Serializable {
     public void setConstrains(final List<ConstrainTerm> constrains) {
         this.constrains = constrains;
     }
-    
+
 }

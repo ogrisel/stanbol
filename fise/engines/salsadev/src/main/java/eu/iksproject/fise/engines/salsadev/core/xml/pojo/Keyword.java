@@ -13,10 +13,12 @@ public class Keyword implements Serializable {
      * Stem of the keyword.
      */
     private String stem;
+
     /**
-     * Term of the keyword. 
+     * Term of the keyword.
      */
     private String term;
+
     /**
      * Score value.
      */

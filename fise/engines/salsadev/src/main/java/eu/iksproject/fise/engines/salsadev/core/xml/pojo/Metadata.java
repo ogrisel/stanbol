@@ -13,6 +13,7 @@ public class Metadata implements Serializable {
      * Metadata name.
      */
     private String name;
+
     /**
      * Metadata value.
      */

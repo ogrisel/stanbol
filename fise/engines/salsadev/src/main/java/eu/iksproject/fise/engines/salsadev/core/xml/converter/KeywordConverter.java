@@ -9,7 +9,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import eu.iksproject.fise.engines.salsadev.core.xml.pojo.Keyword;
 
 /**
- * XStream converter for {@link eu.iksproject.fise.engines.salsadev.core.xml.pojo.Keyword} class.
+ * XStream converter for
+ * {@link eu.iksproject.fise.engines.salsadev.core.xml.pojo.Keyword} class.
  *
  * @author <a href="mailto:aleksey.oborin@salsadev.com">Aleksey Oborin</a>
  * @version %I%, %G%
@@ -19,7 +20,8 @@ public class KeywordConverter implements Converter {
      * {@inheritDoc}
      */
     @Override
-    public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    public void marshal(Object source, HierarchicalStreamWriter writer,
+            MarshallingContext context) {
 
     }
 
@@ -27,7 +29,8 @@ public class KeywordConverter implements Converter {
      * {@inheritDoc}
      */
     @Override
-    public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+    public Object unmarshal(HierarchicalStreamReader reader,
+            UnmarshallingContext context) {
         Keyword keyword = new Keyword();
         keyword.setScore(Double.valueOf(reader.getAttribute("score")));
         keyword.setTerm(reader.getValue());

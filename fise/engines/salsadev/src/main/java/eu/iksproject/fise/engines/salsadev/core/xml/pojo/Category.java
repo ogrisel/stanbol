@@ -3,7 +3,8 @@ package eu.iksproject.fise.engines.salsadev.core.xml.pojo;
 import java.io.Serializable;
 
 /**
- * {@link Category} POJO class, contains information about category and its rate.
+ * {@link Category} POJO class, contains information about category and its
+ * rate.
  *
  * @author <a href="mailto:aleksey.oborin@salsadev.com">Aleksey Oborin</a>
  * @version %I%, %G%
@@ -13,6 +14,7 @@ public class Category implements Serializable {
      * Score value.
      */
     private Double score;
+
     /**
      * Category name.
      */

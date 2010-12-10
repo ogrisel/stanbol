@@ -14,14 +14,17 @@ public class Document implements Serializable {
      * Score value.
      */
     private double score;
+
     /**
      * content snippet.
      */
     private String snippet;
+
     /**
      * Document UID.
      */
     private String uid;
+
     /**
      * List of document's metadata.
      */

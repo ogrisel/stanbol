@@ -11,7 +11,9 @@ import eu.iksproject.fise.engines.salsadev.core.xml.pojo.ConstrainTerm;
 import eu.iksproject.fise.engines.salsadev.core.xml.pojo.SearchDescriptor;
 
 /**
- * XStream converter for {@link eu.iksproject.fise.engines.salsadev.core.xml.pojo.SearchDescriptor} class.
+ * XStream converter for
+ * {@link eu.iksproject.fise.engines.salsadev.core.xml.pojo.SearchDescriptor}
+ * class.
  *
  * @author <a href="mailto:aleksey.oborin@salsadev.com">Aleksey Oborin</a>
  * @version %I%, %G%
@@ -21,12 +23,15 @@ public class SearchDescriptorConverter implements Converter {
      * {@inheritDoc}
      */
     @Override
-    public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    public void marshal(Object source, HierarchicalStreamWriter writer,
+            MarshallingContext context) {
         SearchDescriptor searchDescriptor = (SearchDescriptor) source;
         writer.addAttribute("type", searchDescriptor.getType());
-        writer.addAttribute("threshold", String.valueOf(searchDescriptor.getThreshold()));
+        writer.addAttribute("threshold",
+                String.valueOf(searchDescriptor.getThreshold()));
         writer.addAttribute("page", String.valueOf(searchDescriptor.getPage()));
-        writer.addAttribute("numresults", String.valueOf(searchDescriptor.getNumresults()));
+        writer.addAttribute("numresults",
+                String.valueOf(searchDescriptor.getNumresults()));
 
         writer.startNode("query");
         writer.setValue(searchDescriptor.getQuery());
@@ -39,7 +44,8 @@ public class SearchDescriptorConverter implements Converter {
      * {@inheritDoc}
      */
     @Override
-    public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+    public Object unmarshal(HierarchicalStreamReader reader,
+            UnmarshallingContext context) {
         return null;
     }
 
@@ -53,21 +59,25 @@ public class SearchDescriptorConverter implements Converter {
 
     /**
      * Writes constrains if any.
+     *
      * @param searchDescriptor current search descriptor.
      * @param writer stream writer.
      */
-    private void writeConstrains(SearchDescriptor searchDescriptor, HierarchicalStreamWriter writer) {
-         if (searchDescriptor.getQueryconstrain() != null) {
+    private void writeConstrains(SearchDescriptor searchDescriptor,
+            HierarchicalStreamWriter writer) {
+        if (searchDescriptor.getQueryconstrain() != null) {
             writeConstrain(searchDescriptor.getQueryconstrain(), writer);
         }
     }
 
     /**
      * Writes constrain.
+     *
      * @param constrainTerm current constrain.
      * @param writer stream writer.
      */
-    private void writeConstrain(ConstrainTerm constrainTerm, HierarchicalStreamWriter writer) {
+    private void writeConstrain(ConstrainTerm constrainTerm,
+            HierarchicalStreamWriter writer) {
         writer.startNode("queryconstrain");
         writer.addAttribute("operator", constrainTerm.getOperator());
 

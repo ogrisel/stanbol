@@ -13,10 +13,12 @@ public class AtomicTerm implements Serializable {
      * Operator.
      */
     private String operator;
+
     /**
      * Key name.
      */
     private String key;
+
     /**
      * Key value.
      */

@@ -24,11 +24,16 @@ import eu.iksproject.fise.servicesapi.ServiceProperties;
  * {@link SalsadevIndexingEnhancementEngine} push content for semantic indexing
  * on the Salsadev server for being able to later find related content using the
  * {@link SalsadevEnhancementEngine} implementation.
- * 
+ *
  * @author <a href="mailto:aleksey.oborin@salsadev.com">Aleksey Oborin</a>
+ *
+ *         Disabled: need to implement client id configuration first to avoid
+ *         pushing document references in public index of the Salsadev API: once
+ *         this is done we should publish a new enhancement engine to find
+ *         related content using the specific client id.
  */
-@Component(immediate = true, metatype = true)
-@Service
+// @Component(immediate = true, metatype = true)
+// @Service
 public class SalsadevIndexingEnhancementEngine implements EnhancementEngine, ServiceProperties {
 
     /**

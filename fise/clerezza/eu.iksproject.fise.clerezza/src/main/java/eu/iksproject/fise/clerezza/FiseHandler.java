@@ -7,7 +7,6 @@ package eu.iksproject.fise.clerezza;
 
 
 import eu.iksproject.fise.servicesapi.Store;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Set;
 import javax.ws.rs.FormParam;
@@ -41,32 +40,32 @@ import org.apache.clerezza.rdf.utils.UnionMGraph;
 @Path("/fise")
 public class FiseHandler {
 
-	@Reference
-	Store store;
-	@Reference
-	TcManager tcManager;
+    @Reference
+    Store store;
 
+    @Reference
+    TcManager tcManager;
 
-	@GET
-	public MGraph getFiseMetadata(@QueryParam("uri") UriRef uri) {
-		return store.get(uri.getUnicodeString()).getMetadata();
-	}
-	
-	@POST
-	public ResultSet sparql(@FormParam(value="query") String sqarqlQuery) throws ParseException {
-		SelectQuery query = (SelectQuery)QueryParser.getInstance().parse(sqarqlQuery);
-		Set<UriRef> graphUris = tcManager.listTripleCollections();
-		ArrayList<TripleCollection> tripleCollections = new ArrayList<TripleCollection>();
-		for (Iterator<UriRef> it = graphUris.iterator(); it.hasNext();) {
-			UriRef uriRef = it.next();
-			try {
-				 tripleCollections.add(tcManager.getTriples(uriRef));
-			} catch (NoSuchEntityException ex) {
-				continue;
-			}			
-		}
-		MGraph unionGraph = new UnionMGraph(tripleCollections.toArray(new TripleCollection[0]));
-		ResultSet resultSet = tcManager.executeSparqlQuery(query, unionGraph);
-		return resultSet;
-	}	
+    @GET
+    public MGraph getFiseMetadata(@QueryParam("uri") UriRef uri) {
+        return store.get(uri.getUnicodeString()).getMetadata();
+    }
+
+    @POST
+    public ResultSet sparql(@FormParam(value="query") String sqarqlQuery) throws ParseException {
+        SelectQuery query = (SelectQuery)QueryParser.getInstance().parse(sqarqlQuery);
+        Set<UriRef> graphUris = tcManager.listTripleCollections();
+        ArrayList<TripleCollection> tripleCollections = new ArrayList<TripleCollection>();
+        for (UriRef uriRef : graphUris) {
+            try {
+                tripleCollections.add(tcManager.getTriples(uriRef));
+            } catch (NoSuchEntityException ex) {
+                continue;
+            }
+        }
+        MGraph unionGraph = new UnionMGraph(tripleCollections.toArray(new TripleCollection[0]));
+        ResultSet resultSet = tcManager.executeSparqlQuery(query, unionGraph);
+        return resultSet;
+    }
+
 }

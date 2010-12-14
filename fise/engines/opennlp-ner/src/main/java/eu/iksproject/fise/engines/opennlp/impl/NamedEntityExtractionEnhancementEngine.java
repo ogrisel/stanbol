@@ -46,7 +46,8 @@ import eu.iksproject.fise.servicesapi.InvalidContentException;
 import eu.iksproject.fise.servicesapi.ServiceProperties;
 import eu.iksproject.fise.servicesapi.helper.EnhancementEngineHelper;
 import eu.iksproject.fise.servicesapi.rdf.OntologicalClasses;
-import eu.iksproject.fise.servicesapi.rdf.Properties;
+
+import static eu.iksproject.fise.servicesapi.rdf.Properties.*;
 
 /**
  * FISE Named Entity Recognition enhancement engine based on opennlp's Maximum
@@ -62,7 +63,7 @@ public class NamedEntityExtractionEnhancementEngine implements
      * The default value for the Execution of this Engine. Currently set to
      * {@link ServiceProperties#ORDERING_CONTENT_EXTRACTION}
      */
-    public static final Integer defaultOrder = ServiceProperties.ORDERING_CONTENT_EXTRACTION;
+    public static final Integer defaultOrder = ORDERING_CONTENT_EXTRACTION;
 
     protected static final String TEXT_PLAIN_MIMETYPE = "text/plain";
 
@@ -219,25 +220,25 @@ public class NamedEntityExtractionEnhancementEngine implements
                 UriRef textAnnotation = EnhancementEngineHelper.createTextEnhancement(
                         ci, this);
                 g.add(new TripleImpl(textAnnotation,
-                        Properties.FISE_SELECTED_TEXT,
+                        FISE_SELECTED_TEXT,
                         literalFactory.createTypedLiteral(name)));
                 g.add(new TripleImpl(textAnnotation,
-                        Properties.FISE_SELECTION_CONTEXT,
+                        FISE_SELECTION_CONTEXT,
                         literalFactory.createTypedLiteral(occurrence.context)));
-                g.add(new TripleImpl(textAnnotation, Properties.DC_TYPE,
+                g.add(new TripleImpl(textAnnotation, DC_TYPE,
                         typeUri));
                 g.add(new TripleImpl(
                         textAnnotation,
-                        Properties.FISE_CONFIDENCE,
+                        FISE_CONFIDENCE,
                         literalFactory.createTypedLiteral(occurrence.confidence)));
                 if (occurrence.start != null && occurrence.end != null) {
-                    g.add(new TripleImpl(textAnnotation, Properties.FISE_START,
+                    g.add(new TripleImpl(textAnnotation, FISE_START,
                             literalFactory.createTypedLiteral(occurrence.start)));
-                    g.add(new TripleImpl(textAnnotation, Properties.FISE_END,
+                    g.add(new TripleImpl(textAnnotation, FISE_END,
                             literalFactory.createTypedLiteral(occurrence.end)));
                 }
 
-                // add the subsumption relationship among occurences of the same
+                // add the subsumption relationship among occurrences of the same
                 // name
                 if (firstOccurrenceAnnotation == null) {
                     // check already extracted annotations to find a first most
@@ -248,7 +249,7 @@ public class NamedEntityExtractionEnhancementEngine implements
                             // occurrence, use it as subsumption target
                             firstOccurrenceAnnotation = entry.getValue();
                             g.add(new TripleImpl(textAnnotation,
-                                    Properties.DC_RELATION,
+                                    DC_RELATION,
                                     firstOccurrenceAnnotation));
                             break;
                         }
@@ -260,10 +261,10 @@ public class NamedEntityExtractionEnhancementEngine implements
                         previousAnnotations.put(name, textAnnotation);
                     }
                 } else {
-                    // I am refering to a most specific first occurence of the
+                    // I am referring to a most specific first occurrence of the
                     // same name
                     g.add(new TripleImpl(textAnnotation,
-                            Properties.DC_RELATION, firstOccurrenceAnnotation));
+                            DC_RELATION, firstOccurrenceAnnotation));
                 }
             }
         }
@@ -372,7 +373,7 @@ public class NamedEntityExtractionEnhancementEngine implements
                      * The old code had not worked if names contains more than a
                      * single element!
                      */
-                    lastStartPosition = lastStartPosition + start;
+                    lastStartPosition += start;
                     absoluteStart = sentencePositions[i] + lastStartPosition;
                     absoluteEnd = absoluteStart + name.length();
                 }
@@ -399,8 +400,8 @@ public class NamedEntityExtractionEnhancementEngine implements
     }
 
     public int canEnhance(ContentItem ci) {
-    	//in case text/pain;charSet=UTF8 is parsed
-    	String mimeType = ci.getMimeType().split(";",2)[0];
+        //in case text/pain;charSet=UTF8 is parsed
+        String mimeType = ci.getMimeType().split(";",2)[0];
         if (TEXT_PLAIN_MIMETYPE.equalsIgnoreCase(mimeType)) {
             return ENHANCE_SYNCHRONOUS;
         }
@@ -410,7 +411,8 @@ public class NamedEntityExtractionEnhancementEngine implements
     @Override
     public Map<String, Object> getServiceProperties() {
         return Collections.unmodifiableMap(Collections.singletonMap(
-                ServiceProperties.ENHANCEMENT_ENGINE_ORDERING,
+                ENHANCEMENT_ENGINE_ORDERING,
                 (Object) defaultOrder));
     }
+
 }

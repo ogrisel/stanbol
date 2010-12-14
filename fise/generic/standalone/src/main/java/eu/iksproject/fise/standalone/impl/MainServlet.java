@@ -3,7 +3,6 @@ package eu.iksproject.fise.standalone.impl;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +36,7 @@ import eu.iksproject.fise.servicesapi.Store;
 @SuppressWarnings("serial")
 public class MainServlet extends HttpServlet {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(MainServlet.class);
 
     public static final String ALIAS = "/fise";
 
@@ -110,17 +109,16 @@ public class MainServlet extends HttpServlet {
         resp.getWriter().write('\n');
     }
 
-    private void dumpContentItem(ContentItem ci, PrintWriter w) {
+    private static void dumpContentItem(ContentItem ci, PrintWriter w) {
         w.print("**ContentItem:");
         w.println(ci.getId());
         w.println("**Metadata:");
-        final Iterator<Triple> it = ci.getMetadata().getGraph().iterator();
-        while (it.hasNext()) {
-            w.println(it.next());
+        for (Triple o : ci.getMetadata().getGraph()) {
+            w.println(o);
         }
     }
 
-    private String getContentItemId(HttpServletRequest r) {
+    private static String getContentItemId(HttpServletRequest r) {
         final String result = r.getPathInfo();
         if (result == null || result.length() == 0) {
             throw new IllegalArgumentException(
@@ -140,4 +138,5 @@ public class MainServlet extends HttpServlet {
         httpService.unregister(ALIAS);
         log.info("Servlet unregistered from {}", ALIAS);
     }
+
 }

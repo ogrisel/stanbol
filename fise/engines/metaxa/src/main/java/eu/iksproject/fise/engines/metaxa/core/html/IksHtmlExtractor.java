@@ -23,18 +23,12 @@ import org.w3c.dom.Document;
 
 /**
  * IksHtmlExtractor.java
- * 
+ *
  * @author <a href="mailto:kasper@dfki.de">Walter Kasper</a>
- * 
  */
-
 public class IksHtmlExtractor implements Extractor {
 
-    /**
-     * This contains the logger.
-     */
-    private static final Logger LOG =
-        LoggerFactory.getLogger(IksHtmlExtractor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IksHtmlExtractor.class);
 
     public static String DEFAULT_CONFIGURATION = "htmlextractors.xml";
 
@@ -46,23 +40,18 @@ public class IksHtmlExtractor implements Extractor {
         try {
             registry.initialize(DEFAULT_CONFIGURATION);
         } catch (InitializationException e) {
-            LOG.error("Registration Initalization Error: " + e.getMessage());
+            LOG.error("Registration Initialization Error: " + e.getMessage());
         }
     }
 
-
     public IksHtmlExtractor() {
-
     }
-
 
     public IksHtmlExtractor(String configFileName)
             throws InitializationException {
-
         this();
-        this.registry = new HtmlExtractionRegistry(configFileName);
+        registry = new HtmlExtractionRegistry(configFileName);
     }
-
 
     public void extract(URI id,
             InputStream input, Charset charset, String mimeType,
@@ -120,10 +109,7 @@ public class IksHtmlExtractor implements Extractor {
         }
     }
 
-
-    public static void main(String[] args)
-            throws Exception {
-
+    public static void main(String[] args) throws Exception {
         int argv = 0;
         IksHtmlExtractor inst = new IksHtmlExtractor();
         RDFContainerFactory rdfFactory = new RDFContainerFactoryImpl();
@@ -141,4 +127,5 @@ public class IksHtmlExtractor implements Extractor {
             container.dispose();
         }
     }
+
 }

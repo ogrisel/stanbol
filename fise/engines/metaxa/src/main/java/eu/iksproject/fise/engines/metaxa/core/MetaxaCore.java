@@ -25,7 +25,7 @@ import org.semanticdesktop.aperture.vocabulary.NIE;
 /**
  * {@link MetaxaCore} provides the functionality to extract metadata and text
  * for a number of different document formats (pdf, html, etc.).
- * 
+ *
  * @author Joerg Steffen, DFKI
  * @version $Id$
  */
@@ -36,11 +36,10 @@ public class MetaxaCore {
      */
     private ExtractorRegistry extractorRegistry;
 
-
     /**
      * This creates a new instance of {@code ApertureExtractor} using the given
      * configuration.
-     * 
+     *
      * @param configFileName
      *            a {@link String} with the config file name.
      * @throws IOException
@@ -54,31 +53,25 @@ public class MetaxaCore {
         this.extractorRegistry = new DefaultExtractorRegistry(in);
     }
 
-
     /**
      * This return {@code true} if the given MIME type is supported by the
      * extractor.
-     * 
+     *
      * @param mimeType
      *            a {@link String} with the MIME type
      * @return a {@code boolean}
      */
     public boolean isSupported(String mimeType) {
-
         @SuppressWarnings("rawtypes")
-        Set factories =
-            this.extractorRegistry.getExtractorFactories(mimeType);
-        if (factories != null && !factories.isEmpty()) {
-            return true;
-        }
-        return false;
+        Set factories = this.extractorRegistry.getExtractorFactories(mimeType);
+        return factories != null && !factories.isEmpty();
     }
 
 
     /**
      * This returns a model containing all the metadata that could be extracted
      * by reading the given input stream using the given MIME type.
-     * 
+     *
      * @param in
      *            an {@link InputStream} where to read the document from
      * @param docId
@@ -97,8 +90,7 @@ public class MetaxaCore {
             throws ExtractorException, IOException {
 
         @SuppressWarnings("rawtypes")
-        Set factories =
-            this.extractorRegistry.getExtractorFactories(mimeType);
+        Set factories = this.extractorRegistry.getExtractorFactories(mimeType);
         Model result = null;
         if (factories != null && !factories.isEmpty()) {
             // get extractor from the first available factory
@@ -120,18 +112,16 @@ public class MetaxaCore {
         return result;
     }
 
-
     /**
      * This returns a documents plain text if contained in the given extracted
      * metadata.
-     * 
+     *
      * @param model
      *            a {@link Model} with the extracted metadata
      * @return a {@link String} with the plain text content or {@code null} if
      *         no plain text was contained in the extracted metadata
      */
     public static String getText(Model model) {
-
         String result = null;
         ClosableIterator<Statement> statements = null;
         try {
@@ -155,7 +145,7 @@ public class MetaxaCore {
                 statements.close();
             }
         }
-
         return result;
     }
+
 }

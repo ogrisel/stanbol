@@ -1,4 +1,4 @@
-/**
+/*
 Copyright (c) 2010, IKS Project
 All rights reserved.
 
@@ -36,33 +36,34 @@ import org.apache.clerezza.rdf.core.MGraph;
 
 import eu.iksproject.fise.servicesapi.helper.ContentItemHelper;
 
-/** Store and retrieve ContentItem instances.
+/**
+ * Store and retrieve ContentItem instances.
  *
- *  Incomplete CRUD for now, we don't need it for our
- *  initial use cases.
+ * Incomplete CRUD for now, we don't need it for our
+ * initial use cases.
  */
 public interface Store {
 
-	/**
-	 * Creates a {@link ContentItem} item based on supplied data,
-	 * using an implementation that suits this store.
-	 *
-	 * The call to this method creates an empty data transfer object in
-	 * memory suitable for later saving using the {@link Store#put(ContentItem)} method.
-	 * The Store state is unchanged by the call to the
-	 * {@link #create(String, byte[], String)} methode.
-	 *
-	 * @param id The value to use {@link ContentItem#getId}. If <code>null</code>
-	 * is parsed as id, an id need to be computed based on the parsed content (
-	 * e.g. calculating the stream digest (see also
-	 * {@link ContentItemHelper#streamDigest(java.io.InputStream, java.io.OutputStream, String)})
-	 * @param content the binary content
-	 * @param contentType The Mime-Type of the binary data
-	 * @return the {@link ContentItem} that was created
-	 */
-	ContentItem create(String id, byte[] content, String contentType);
+    /**
+     * Creates a {@link ContentItem} item based on supplied data,
+     * using an implementation that suits this store.
+     * <p>
+     * Calling this method creates an empty data transfer object in
+     * memory suitable for later saving using the {@link Store#put(ContentItem)} method.
+     * The Store state is unchanged by the call to the
+     * {@link #create(String, byte[], String)} method.
+     *
+     * @param id The value to use {@link ContentItem#getId}. If <code>null</code>
+     * is parsed as id, an id need to be computed based on the parsed content (
+     * e.g. calculating the stream digest (see also
+     * {@link ContentItemHelper#streamDigest(java.io.InputStream, java.io.OutputStream, String)})
+     * @param content the binary content
+     * @param contentType The Mime-Type of the binary data
+     * @return the {@link ContentItem} that was created
+     */
+    ContentItem create(String id, byte[] content, String contentType);
 
-	/** Store supplied {@link ContentItem} and return its id, which
+    /** Store supplied {@link ContentItem} and return its id, which
      *  is assigned by the store if not defined yet.
      *
      *  If the {@link ContentItem} already exists, it is overwritten.

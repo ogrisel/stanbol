@@ -26,7 +26,7 @@ import eu.iksproject.fise.engines.metaxa.MetaxaEngine;
 
 /**
  * {@link TestMetaxaCore} is a test class for {@link MetaxaCore}.
- * 
+ *
  * @author Joerg Steffen, DFKI
  * @version $Id$
  */
@@ -46,9 +46,6 @@ public class TestMetaxaCore {
 
     /**
      * This initializes the Aperture extractor.
-     * 
-     * @throws IOException
-     *             if an error occurs
      */
     @BeforeClass
     public static void oneTimeSetUp()
@@ -57,22 +54,20 @@ public class TestMetaxaCore {
         extractor = new MetaxaCore("extractionregistry.xml");
     }
 
-
     /**
      * This tests the pdf extraction.
-     * 
+     *
      * @throws ExtractorException
      *             if there is an error during extraction
      * @throws IOException
      *             if there is an error when reading the document
      */
     @Test
-    public void testPdfExtraction()
-            throws ExtractorException, IOException {
+    public void testPdfExtraction() throws Exception {
 
         String testFile = "test.pdf";
         String testResultFile = "pdf-res.txt";
-        
+
         // extract text from pdf
         InputStream in =
             this.getClass().getClassLoader().getResourceAsStream(
@@ -95,22 +90,20 @@ public class TestMetaxaCore {
         Assert.assertEquals(11, tripleCounter);
     }
 
-    
     /**
      * This tests the html extraction.
-     * 
+     *
      * @throws ExtractorException
      *             if there is an error during extraction
      * @throws IOException
      *             if there is an error when reading the document
      */
     @Test
-    public void testHtmlExtraction()
-            throws ExtractorException, IOException {
+    public void testHtmlExtraction() throws Exception {
 
         String testFile = "test.html";
         String testResultFile = "html-res.txt";
-        
+
         // extract text from html
         InputStream in =
             this.getClass().getClassLoader().getResourceAsStream(
@@ -133,22 +126,20 @@ public class TestMetaxaCore {
         Assert.assertEquals(28, tripleCounter);
     }
 
-    
     /**
      * This tests the html extraction.
-     * 
+     *
      * @throws ExtractorException
      *             if there is an error during extraction
      * @throws IOException
      *             if there is an error when reading the document
      */
     @Test
-    public void testRdfaExtraction()
-            throws ExtractorException, IOException {
+    public void testRdfaExtraction() throws Exception {
 
         String testFile = "test-rdfa.html";
         String testResultFile = "rdfa-res.txt";
-        
+
         // extract text from RDFa annotated html
         InputStream in =
             this.getClass().getClassLoader().getResourceAsStream(
@@ -170,12 +161,12 @@ public class TestMetaxaCore {
         int tripleCounter = this.printTriples(m);
         Assert.assertEquals(10, tripleCounter);
     }
-    
+
 
     /**
      * This prints out the FISE triples that would be created for the metadata
      * contained in the given model.
-     * 
+     *
      * @param m
      *            a {@link Model}
      * @return an {@code int} with the number of added triples
@@ -183,31 +174,22 @@ public class TestMetaxaCore {
     private int printTriples(Model m) {
 
         int tripleCounter = 0;
-        
+
         HashMap<BlankNode,BNode> blankNodeMap = new HashMap<BlankNode,BNode>();
-        
+
         ClosableIterator<Statement> it = m.iterator();
         while (it.hasNext()) {
             Statement oneStmt = it.next();
-            NonLiteral fiseSubject = null;
-            UriRef fisePredicate = null;
-            Resource fiseObject = null;
-            
-            fiseSubject = 
-                (NonLiteral)MetaxaEngine.asFiseResource(
-                    oneStmt.getSubject(), blankNodeMap);
-            fisePredicate =
-                (UriRef)MetaxaEngine.asFiseResource(
-                    oneStmt.getPredicate(), blankNodeMap);
-            fiseObject =
-                MetaxaEngine.asFiseResource(
-                    oneStmt.getObject(), blankNodeMap);
-            
-            if (null != fiseSubject 
-                    && null != fisePredicate 
+
+            NonLiteral fiseSubject = (NonLiteral) MetaxaEngine.asFiseResource(oneStmt.getSubject(), blankNodeMap);
+            UriRef fisePredicate = (UriRef) MetaxaEngine.asFiseResource(oneStmt.getPredicate(), blankNodeMap);
+            Resource fiseObject = MetaxaEngine.asFiseResource(oneStmt.getObject(), blankNodeMap);
+
+            if (null != fiseSubject
+                    && null != fisePredicate
                     && null != fiseObject) {
-                Triple t = 
-                    new TripleImpl(fiseSubject, fisePredicate, fiseObject); 
+                Triple t =
+                    new TripleImpl(fiseSubject, fisePredicate, fiseObject);
                 LOG.debug("adding " + t);
                 tripleCounter++;
             }
@@ -216,14 +198,13 @@ public class TestMetaxaCore {
             }
         }
         it.close();
-        
+
         return tripleCounter;
     }
-    
-    
+
     /**
      * Cleanup strings for comparison, by removing non-printable chars.
-     * 
+     *
      * @param txt
      *            a {@link String} with the text to clean
      * @return a {@link String} with the result

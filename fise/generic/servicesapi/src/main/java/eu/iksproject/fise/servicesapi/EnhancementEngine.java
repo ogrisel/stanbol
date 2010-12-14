@@ -1,4 +1,4 @@
-/**
+/*
 Copyright (c) 2010, IKS Project
 All rights reserved.
 
@@ -81,4 +81,5 @@ public interface EnhancementEngine {
      *             expected
      */
     void computeEnhancements(ContentItem ci) throws EngineException;
+
 }

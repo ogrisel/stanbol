@@ -12,7 +12,7 @@ import org.apache.clerezza.rdf.core.UriRef;
  * @author ogrisel
  *
  */
-public interface Properties {
+public class Properties {
 
     /**
      * The canonical way to give the type of a resource. It is very common that
@@ -152,11 +152,11 @@ public interface Properties {
     public static final UriRef DC_LANGUAGE = new UriRef(NamespaceEnum.dc
             + "language");
 
-	/**
-	 * Plain text content of a content item.
-	  */
-	public static final UriRef NIE_PLAINTEXTCONTENT = new UriRef(NamespaceEnum.nie + "plainTextContent");
-	
+    /**
+     * Plain text content of a content item.
+      */
+    public static final UriRef NIE_PLAINTEXTCONTENT = new UriRef(NamespaceEnum.nie + "plainTextContent");
+
     /**
      * The topic of the resource. Used to relate a content item to a
      * skos:Concept modelling one of the overall topic of the content.

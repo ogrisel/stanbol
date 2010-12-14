@@ -1,4 +1,4 @@
-/**
+/*
 Copyright (c) 2010, IKS Project
 All rights reserved.
 
@@ -38,17 +38,18 @@ import java.util.List;
  * Accept requests for enhancing ContentItems, and processes them either
  * synchronously or asynchronously (as decided by the enhancement engines or by
  * configuration).
- *
+ * <p>
  * The progress of the enhancement process should be made accessible in the
  * ContentItem's metadata.
  */
 public interface EnhancementJobManager {
+
     /**
      * Create relevant asynchronous requests or enhance content immediately. The
-     * result is not persisted right now. The caller is responsible to call the
+     * result is not persisted right now. The caller is responsible for calling the
      * {@link Store#put(ContentItem)} afterwards in case persistence is
      * required.
-     *
+     * <p>
      * TODO: define the expected semantics if asynchronous enhancements were to
      * get implemented.
      *
@@ -61,4 +62,5 @@ public interface EnhancementJobManager {
      * can be used by the manager.
      */
     List<EnhancementEngine> getActiveEngines();
+
 }

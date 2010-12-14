@@ -8,15 +8,13 @@ import org.w3c.dom.Document;
 
 /**
  * HtmlExtractionComponent.java
- * 
+ *
  * @author <a href="mailto:kasper@dfki.de">Walter Kasper</a>
- * 
+ *
  */
-
 public interface HtmlExtractionComponent {
 
-    public void extract(String id, Document doc, Map<String, Object> params,
-            RDFContainer result)
+    void extract(String id, Document doc, Map<String, Object> params, RDFContainer result)
             throws ExtractorException;
 
 }
